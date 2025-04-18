@@ -1,3 +1,294 @@
-:root{
-  background-color: beige;
+:root {
+  background-color:#F7CFD8;
+}
+
+.Navbar {
+  background: #FF8282;
+  height: 60px;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  width: 100%; /* Full width */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-sizing: border-box; /* This ensures padding is included in width calculation */
+}
+
+.left-section {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 30px;
+  width: 30px;
+  object-fit: contain;
+}
+
+.webname {
+  margin-left: 10px;
+  font-size: x-large;
+  font-weight: bold;
+  color: white;
+  font-family: cursive;
+  letter-spacing: 1px;
+}
+
+.actions {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.add, .details {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.add:hover, .details:hover {
+  transform: scale(1.1);
+}
+
+/* Add padding to body to account for fixed navbar */
+body {
+  padding-top: 60px;
+  margin: 0;
+  box-sizing: border-box;
+  /* Apply Oi as a fallback font for the body */
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Example of using Oi font for certain elements */
+h1, h2:not(.webname), h3 {
+  font-family: 'Oi', cursive;
+}
+
+/* Reset box-sizing for all elements */
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+.intro-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 60px); /* Account for navbar height */
+  padding: 20px;
+  background-color: #F7CFD8;
+}
+
+.intro-content {
+  max-width: 800px;
+  text-align: center;
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.intro-title {
+  font-family: 'Monoton', cursive;
+  color: #FF8282;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+}
+
+.intro-description {
+  margin-bottom: 30px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.intro-features {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 30px 0;
+}
+
+.feature {
+  flex: 1;
+  min-width: 200px;
+  margin: 15px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.feature:hover {
+  transform: translateY(-5px);
+}
+
+.feature-icon {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+.feature h3 {
+  font-family: 'Oi', cursive;
+  color: #FF8282;
+  margin-bottom: 10px;
+}
+
+.get-started-btn {
+  background-color: #FF8282;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(255, 130, 130, 0.3);
+}
+
+.get-started-btn:hover {
+  background-color: #ff6b6b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(255, 130, 130, 0.4);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .intro-features {
+    flex-direction: column;
+  }
+  
+  .feature {
+    margin: 10px 0;
+  }
+  
+  .intro-title {
+    font-size: 2rem;
+  }
+}
+
+/* Loading and Error States */
+.loading,
+.error {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.2rem;
+    color: #FF8282;
+}
+
+/* Contact List Container */
+.contact-list-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.contact-list-title {
+    color: #FF8282;
+    font-family: 'Oi', cursive;
+    margin-bottom: 20px;
+}
+
+/* Add Contact Button */
+.add-contact-btn {
+    background-color: #FF8282;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.add-contact-btn:hover {
+    background-color: #ff6b6b;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Contact List */
+.contact-list {
+    display: grid;
+    gap: 15px;
+}
+
+/* Contact Card */
+.contact-card {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Contact Info */
+.contact-info h3 {
+    margin: 0 0 5px 0;
+    color: #FF8282;
+    font-family: 'Oi', cursive;
+    font-size: 1.2rem;
+}
+
+.contact-info p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.favorite-icon {
+    margin-left: 10px;
+    color: #FFD700;
+}
+
+/* Contact Actions */
+.contact-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.view-btn,
+.edit-btn {
+    background-color: #FF8282;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.view-btn:hover,
+.edit-btn:hover {
+    background-color: #ff6b6b;
+    transform: translateY(-2px);
+}
+
+.isloading{
+  margin-top: 20% ;
+  color: #ff6b6b;
+  text-align: center;
+  animation: pulse 1.0s infinite;
+
+}
+@keyframes pulse{
+  0%{opacity: 0.5;}
+  50%{opacity: 1;}
+  100%{opacity: 0.5;}
 }

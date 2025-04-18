@@ -1,16 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import Navbar from '../pages/Navbar'
+import Intro from '../pages/Intro'
+import ContactDetails from '../pages/ContactDetails'
+import ContactsListPage from '../pages/ContactsListPage'
+import AddContact from '../pages/AddContact'
+import EditPage from '../pages/EditPage'
+import FavoriteContacts from '../pages/FavoriteContacts'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div></div>
-       
-    </>
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Intro />} />
+        <Route path="/contacts" element={<ContactsListPage />} />
+        <Route path="/contacts/:id" element={<ContactDetails />} />
+        <Route path="/add" element={<AddContact />} />
+        <Route path="/edit/:id" element={<EditPage />} />
+        <Route path="/favorites" element={<FavoriteContacts />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Router>
   )
 }
 
