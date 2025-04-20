@@ -1,44 +1,44 @@
 {
-    "contacts": [
-      {
-        "id": 1,
-        "name": "John Doe",
-        "email": "john.doe@example.com",
-        "phone": "+254123456789",
-        "isFavorite": true,
-        "isBlocked": false
-      },
-      {
-        "id": 2,
-        "name": "Jane Smith",
-        "email": "jane.smith@example.com",
-        "phone": "+254765345128",
-        "isFavorite": false,
-        "isBlocked": false
-      },
-      {
-        "id": 3,
-        "name": "Robert Johnson",
-        "email": "robert.johnson@example.com",
-        "phone": "+254722635813",
-        "isFavorite": true,
-        "isBlocked": true
-      },
-      {
-        "id": 4,
-        "name": "Emily Davis",
-        "email": "emily.davis@example.com",
-        "phone": "+254 112 543 834",
-        "isFavorite": false,
-        "isBlocked": false
-      },
-      {
-        "id": 5,
-        "name": "Michael Wilson",
-        "email": "michael.wilson@example.com",
-        "phone": "+254701222671",
-        "isFavorite": false,
-        "isBlocked": true
-      }
-    ]
-  }
+  "contacts": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "phone": "+254123456789",
+      "isFavorite": true,
+      "isBlocked": false
+    },
+    {
+      "id": "2",
+      "name": "Jane Smith",
+      "email": "jane.smith@example.com",
+      "phone": "+254765345128",
+      "isFavorite": false,
+      "isBlocked": false
+    },
+    {
+      "id": "3",
+      "name": "Robert Johnson",
+      "email": "robert.johnson@example.com",
+      "phone": "+254722635813",
+      "isFavorite": true,
+      "isBlocked": true
+    },
+    {
+      "id": "4",
+      "name": "Emily Davis",
+      "email": "emily.davis@example.com",
+      "phone": "+254 112 543 834",
+      "isFavorite": false,
+      "isBlocked": false
+    },
+    {
+      "id": "5",
+      "name": "Michael Wilson",
+      "email": "michael.wilson@example.com",
+      "phone": "+254701222671",
+      "isFavorite": false,
+      "isBlocked": true
+    }
+  ]
+}

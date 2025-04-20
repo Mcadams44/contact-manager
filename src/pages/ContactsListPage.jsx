@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import AddContact from './AddContact'
 
 function ContactsListPage() {
     const [contacts, setContacts] = useState([])
@@ -27,7 +28,7 @@ function ContactsListPage() {
             <h1 className="contact-list-title">Contact List</h1>
             
             <div className="contact-list-actions">
-                <Link to="/add" className="add-contact-btn">
+                <Link to="/add" element={AddContact} className="add-contact-btn">
                     Add New Contact
                 </Link>
             </div>
