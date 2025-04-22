@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-// import { Link, NavLink } from 'react-router-dom';
 
 function AddContact() {
   const [name, setName] = useState('');
@@ -77,7 +76,6 @@ function AddContact() {
         <input  
           className='new-contact' 
           type="tel" 
-          pattern="[0-9]{10}" 
           placeholder='Enter Phone number ' 
           maxLength={10} 
           value={phone} 
