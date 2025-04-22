@@ -479,3 +479,30 @@ h1, h2:not(.webname), h3 {
   border-radius: 10px;
   align-self: right;
 }
+
+.form-select{
+  width: fit-content;
+  text-align: center;
+  margin-left: 15px;
+  font-size: large;
+  border-radius: 5px;
+  height: 30px;
+}
+
+.clear-filter-btn{
+  margin-left: 15px;
+  font-size: large;
+  border-radius: 5px;
+  border-width: 1px;
+  height: 30px;
+}
+
+.clear-filter-btn:hover{
+  transform: translateY(-5px);
+  transition-duration: .7s;
+  background-color: #f44336;
+  color: white;
+}
+.filter-status{
+  font-size: large;
+}

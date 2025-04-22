@@ -1,12 +1,19 @@
 import React from 'react'
 
-const ContactFilter = ( filterUser ) => {
+const ContactFilter = ({ filterUser, activeFilter }) => {
   return (
-    <select name="select filter" id="" className="form-select" onChange={(e) => filterUser.filterUser(e.target.value)}>
-        <option value=""></option>
-        <option value="favorite">Favorite</option>
-        <option value="blocked">Blocked</option>
+    <select 
+      name="select-filter" 
+      className="form-select" 
+      onChange={(e) => filterUser(e.target.value)}
+      value={activeFilter}
+      aria-label="Filter contacts"
+    >
+      <option value="">--select filter--</option>
+      <option value="favorite">Favorites</option>
+      <option value="blocked">Blocked</option>
     </select>
   )
 }
+
 export default ContactFilter
