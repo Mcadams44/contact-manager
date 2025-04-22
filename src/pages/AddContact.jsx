@@ -1,13 +1,16 @@
+// AddContact.jsx
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom';
+import ReactModal from 'react-modal'
 
-function AddContact() {
+function AddContact({closeModal}) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isBlocked, setIsBlocked] = useState(false)
   const [isAdding, setIsAdding] = useState(false);
-  const [addStatus, setAddStatus] = useState(null); 
+  const [addStatus, setAddStatus] = useState(null);
+  // const [isOpen, setIsOpen] = React.useState(false)
 
   useEffect(() => {
     if (addStatus) {
@@ -18,6 +21,10 @@ function AddContact() {
     return () => clearTimeout(3000);
   }, [addStatus]);
 
+  // function closeModal() {
+  //  setIsOpen(false);
+  // }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsAdding(true);
@@ -27,7 +34,7 @@ function AddContact() {
       email,
       phone,
       isFavorite,
-      
+      isBlocked
     };
 
     fetch('http://localhost:3000/contacts', {
@@ -37,13 +44,14 @@ function AddContact() {
     })
     .then(resp => resp.json())
     .then(data => {
-      console.log(data, "Added succesfully");
+      console.log(data, "Added successfully");
       setName('');
       setEmail('');
       setPhone('');
       setIsFavorite(false);
       setIsAdding(false);
       setAddStatus('success');
+      closeModal()
     })
     .catch(err => {
       console.log(err);
@@ -53,7 +61,8 @@ function AddContact() {
   }
 
   return (
-    <>
+    <div className="modal-content">
+      <button className="close-modal" onClick={closeModal}>Close</button>
       <form className='add-contact' onSubmit={handleSubmit}>
         <h1>Add New Contact</h1>
         <input 
@@ -97,8 +106,6 @@ function AddContact() {
           {isAdding ? 'Adding...' : 'Add Contact'}
         </button>
       </form>
-      <Link to="/contacts">
-      <button className='backHome'>Go back Home</button></Link>
       
       {addStatus && (
         <div className="notification-container">
@@ -111,7 +118,7 @@ function AddContact() {
           </div>
         </div>
       )}
-    </>
+    </div>
   )
 }
 

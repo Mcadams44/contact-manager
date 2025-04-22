@@ -9,6 +9,18 @@ import { GoBlocked } from "react-icons/go";
 import { TbLockOpen } from "react-icons/tb";
 import { MdBlock } from "react-icons/md";
 import { FaStar } from "react-icons/fa";
+import ReactModal from 'react-modal'
+
+// const customStyles = {
+//     content: {
+//         top: '50%',
+//         left: '50%',
+//       right: 'auto',
+//       bottom: 'auto',
+//       marginRight: '-50%',
+//       transform: 'translate(-50%, -50%)',
+//     },
+// };
 
 function ContactsListPage() {
     const [contacts, setContacts] = useState([])
@@ -16,6 +28,22 @@ function ContactsListPage() {
     const [deleteStatus, setDeleteStatus] = useState(null)
     const [filteredContacts, setFilteredContacts] = useState([])
     const [activeFilter, setActiveFilter] = useState("")
+    const [modalIsOpen, setIsOpen] = React.useState(false);
+    // let subtitle;
+    
+    function openModal() {
+    setIsOpen(true);
+  }
+
+  // references are now sync'd and can be accessed.
+//   function afterOpenModal() {
+//     subtitle.style.color = '#f00';
+//   }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
@@ -33,9 +61,9 @@ function ContactsListPage() {
         fetch('http://localhost:3000/contacts')
         .then(response => response.json())
         .then(data => {
-            console.log("Loaded contacts:", data); // Log the actual data to check structure
+            console.log("Loaded contacts:", data); 
             setContacts(data)
-            setFilteredContacts(data) // Initialize filtered contacts with all contacts
+            setFilteredContacts(data) 
             setTimeout(() => {
                 setisLoading(false)
             }, 2000)
@@ -46,25 +74,22 @@ function ContactsListPage() {
         })
     },[])
 
-    // Fixed Contact filter function
     const filterUser = (filterType) => {
         console.log("Filtering by:", filterType);
         
         setActiveFilter(filterType);
         
         if (filterType === "") {
-            // Show all contacts when no filter is selected
             setFilteredContacts([...contacts]);
             console.log("Showing all contacts:", contacts.length);
         } else if (filterType === "favorite") {
-            // Check both boolean true and string "true" for robustness
+
             const favorites = contacts.filter(contact => 
                 contact.isFavorite === true || contact.isFavorite === "true"
             );
             console.log("Filtered favorites:", favorites.length);
             setFilteredContacts(favorites);
         } else if (filterType === "blocked") {
-            // Check both boolean true and string "true" for robustness
             const blocked = contacts.filter(contact => 
                 contact.isBlocked === true || contact.isBlocked === "true"
             );
@@ -72,7 +97,6 @@ function ContactsListPage() {
             setFilteredContacts(blocked);
         }
     }
-
     const handleDelete = (contactId) => {
         fetch(`http://localhost:3000/contacts/${contactId}`, {
             method: 'DELETE'
@@ -81,7 +105,6 @@ function ContactsListPage() {
             if (response.ok) {
                 const updatedContacts = contacts.filter(contact => contact.id !== contactId)
                 setContacts(updatedContacts)
-                // Also update filtered contacts to maintain current filter
                 setFilteredContacts(prevFiltered => 
                     prevFiltered.filter(contact => contact.id !== contactId)
                 )
@@ -97,8 +120,7 @@ function ContactsListPage() {
             setDeleteStatus('error')
         })
     }
-    
-    // Handler for toggling blocked status
+   
     const handleToggleBlocked = (contact) => {
         fetch(`http://localhost:3000/contacts/${contact.id}`, {
             method: 'PATCH',
@@ -106,26 +128,25 @@ function ContactsListPage() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                isBlocked: !contact.isBlocked
+                isBlocked: true/false
             })
         })
         .then(response => response.json())
-        .then(updatedContact => {
-            // Update contact in state
-            const updatedContacts = contacts.map(c => 
-                c.id === contact.id ? updatedContact : c
-            );
-            setContacts(updatedContacts);
+        // .then(updatedContact => {
+        //     // Update contact in state
+        //     const updatedContacts = contacts.map(contact => 
+        //         contact.id === contact.id ? updatedContact : contact
+        //     );
+        //     setContacts(updatedContacts);
             
-            // Re-apply current filter to update filtered contacts
-            filterUser(activeFilter);
-        })
+        //     filterUser(activeFilter);
+        // })
         .catch(err => console.error('Error updating contact:', err));
     };
 
+
     if (isloading) return <h1 className="isloading">Loading...</h1>
 
-    // Determine which contacts to display based on active filter
     const displayedContacts = activeFilter !== "" ? filteredContacts : contacts;
 
     return (
@@ -147,9 +168,9 @@ function ContactsListPage() {
             </div>
             
             <div className="contact-list-actions">
-                <Link to="/add" element={AddContact} className="add-contact-btn">
+                <button className="add-contact-btn" onClick={openModal}>
                     Add New Contact
-                </Link>
+                </button>
                 
             </div>
             
@@ -187,7 +208,7 @@ function ContactsListPage() {
                                 </button>
                                 <button 
                                     type="button" 
-                                    onClick={() => handleToggleBlocked(contact)}
+                                    onClick={handleToggleBlocked}
                                     className='block-btn'
                                     title={contact.isBlocked ? "Unblock Contact" : "Block Contact"}
                                 >
@@ -215,6 +236,15 @@ function ContactsListPage() {
             </div>
         </div>
         )}
+
+        <ReactModal
+                isOpen={modalIsOpen}
+                // onAfterOpen={afterOpenModal}
+                onRequestClose={closeModal}
+                // style={customStyles}
+        >
+            <AddContact closeModal={closeModal}/>
+        </ReactModal>
         </>
     )
 }
