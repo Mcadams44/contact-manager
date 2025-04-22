@@ -1,9 +1,9 @@
 :root {
-  background-color:#F7CFD8;
+  background-color:#ffe5ec;
 }
 
 .Navbar {
-  background: #FF8282;
+  background: #457b9d;
   height: 60px;
   position: fixed;
   display: flex;
@@ -59,6 +59,13 @@
   cursor: pointer;
 
 }
+
+.no-underline {
+  text-decoration: none;
+  text-decoration-line: none;
+  text-decoration-style: none;
+}
+
 .details {
   width: 25px;
   height: 25px;
@@ -109,7 +116,7 @@ h1, h2:not(.webname), h3 {
 
 .intro-title {
   font-family: 'Monoton', cursive;
-  color: #FF8282;
+  color: #457b9d;
   margin-bottom: 30px;
   font-size: 2.5rem;
 }
@@ -141,7 +148,11 @@ h1, h2:not(.webname), h3 {
 .feature:hover {
   transform: translateY(-5px);
 }
-
+.favorite-display{
+  width: 50px;
+  height: 50px;
+  
+}
 .feature-icon {
   font-size: 2rem;
   margin-bottom: 15px;
@@ -149,12 +160,12 @@ h1, h2:not(.webname), h3 {
 
 .feature h3 {
   font-family: 'Oi', cursive;
-  color: #FF8282;
+  color: #457b9d;
   margin-bottom: 10px;
 }
 
 .get-started-btn {
-  background-color: #FF8282;
+  background-color: #457b9d;
   color: white;
   border: none;
   padding: 12px 30px;
@@ -193,7 +204,7 @@ h1, h2:not(.webname), h3 {
     text-align: center;
     padding: 20px;
     font-size: 1.2rem;
-    color: #FF8282;
+    color: #457b9d;
 }
 
 /* Contact List Container */
@@ -204,14 +215,14 @@ h1, h2:not(.webname), h3 {
 }
 
 .contact-list-title {
-    color: #FF8282;
+    color: #457b9d;
     font-family: 'Oi', cursive;
     margin-bottom: 20px;
 }
 
 /* Add Contact Button */
 .add-contact-btn {
-    background-color: #FF8282;
+    background-color: #457b9d;
     color: white;
     padding: 10px 15px;
     border-radius: 5px;
@@ -254,7 +265,7 @@ h1, h2:not(.webname), h3 {
 /* Contact Info */
 .contact-info h3 {
     margin: 0 0 5px 0;
-    color: #FF8282;
+    color: #457b9d;
     font-family: 'Oi', cursive;
     font-size: 1.2rem;
 }
@@ -275,10 +286,7 @@ h1, h2:not(.webname), h3 {
     gap: 10px;
 }
 
-.view-btn,
-.edit-btn, .delete-btn{
-    background-color: #FF8282;
-    color: white;
+.edit-btn, .delete-btn, .block-btn{
     padding: 8px 12px;
     border-radius: 5px;
     text-decoration: none;
@@ -286,18 +294,25 @@ h1, h2:not(.webname), h3 {
     font-weight: bold;
     border: none;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 1.5rem;
 }
 
-.view-btn:hover,
+.blocked{
+  color: red;
+}
+.notBlocked{
+ color: #4caf50;
+}
+
+.notBlocked:hover,
+.delete-btn,
 .edit-btn:hover {
-    background-color: #ff6b6b;
     transform: translateY(-2px);
 }
 
 .isloading{
   margin-top: 20% ;
-  color: #ff6b6b;
+  color: #457b9d;
   text-align: center;
   animation: pulse 1.0s infinite;
 
@@ -306,13 +321,6 @@ h1, h2:not(.webname), h3 {
   0%{opacity: 0.5;}
   50%{opacity: 1;}
   100%{opacity: 0.5;}
-}
-
-
-.block {
-  width: 30px;
-  height: 30px;
-  margin-right: 0; 
 }
 
 /* Additional styles for the AddContact form */
@@ -327,7 +335,7 @@ h1, h2:not(.webname), h3 {
 }
 
 .add-contact h1 {
-  color: #FF8282;
+  color: #457b9d;
   margin-bottom: 20px;
   text-align: center;
   border-bottom: 4px black solid ;
@@ -362,28 +370,6 @@ h1, h2:not(.webname), h3 {
 
 .submit-contact:hover {
   background-color: #45a049;
-}
-
-/* Update block container styling */
-.block-container {
-  display: flex !important;
-  align-items: center;
-  justify-content: flex-start;
-  background-color: #f44336;
-  color: white;
-  padding: 8px 15px; /* Adjust padding to be less */
-  gap: 10px; /* Add a small gap between elements */
-}
-
-.block-container.active {
-  background-color: #cccccc;
-}
-
-.block-text {
-  flex-grow: 1;
-  text-align: center;
-  padding-right: 10px;
-  font-size: x-large;
 }
 
 .favorite-active {
@@ -482,4 +468,14 @@ h1, h2:not(.webname), h3 {
   border-radius: 5px;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
   animation: slideUp 0.3s ease;
+}
+
+#searchbar{
+  width: 200px;
+  font-size: large;
+  margin-bottom: 15px;
+  height: 30px;
+  border: hidden;
+  border-radius: 10px;
+  align-self: right;
 }

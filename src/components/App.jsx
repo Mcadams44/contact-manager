@@ -19,7 +19,6 @@ function App() {
         <Route path="/add" element={<AddContact />} />
         <Route path="/edit/:id" element={<EditPage />} />
         <Route path="/favorites" element={<FavoriteContacts />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
   )

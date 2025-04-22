@@ -6,7 +6,7 @@ function Navbar() {
     <div className='Navbar'>
       <div className="left-section">
         <Link to="/contacts">
-          <img className='logo' src="img/phone-call.png" alt="Contact manager" />
+          <img className='logo' src="img/circle.png" alt="Contact manager" />
         </Link>
         <h2 className='webname'>Contact Manager</h2>
       </div>

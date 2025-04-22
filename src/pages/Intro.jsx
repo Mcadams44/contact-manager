@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../components/App.css';
+import { MdFavorite } from "react-icons/md";
 
 function Intro() {
   const navigate = useNavigate();
@@ -28,7 +29,9 @@ function Intro() {
             </div>
             
             <div className="feature">
-              <div className="feature-icon">⭐</div>
+              <div >
+              <img className="favorite-display" src='img/favorite.png'/>
+              </div>
               <h3>Favorite</h3>
               <p>Mark important contacts as favorites for quick access</p>
             </div>

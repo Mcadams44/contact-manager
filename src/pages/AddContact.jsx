@@ -6,7 +6,6 @@ function AddContact() {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [isFavorite, setIsFavorite] = useState(false);
-  const [isBlocked, setIsBlocked] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [addStatus, setAddStatus] = useState(null); 
 
@@ -28,7 +27,7 @@ function AddContact() {
       email,
       phone,
       isFavorite,
-      isBlocked,
+      
     };
 
     fetch('http://localhost:3000/contacts', {
@@ -43,7 +42,6 @@ function AddContact() {
       setEmail('');
       setPhone('');
       setIsFavorite(false);
-      setIsBlocked(false);
       setIsAdding(false);
       setAddStatus('success');
     })
@@ -89,15 +87,6 @@ function AddContact() {
           className={isFavorite ? 'favorite-active' : 'favorite-notActive'}
         >
           {isFavorite ? 'Remove as favorite ★' : 'Set as Favorite ☆'}
-        </button>
-        
-        <button 
-          type="button" 
-          onClick={() => setIsBlocked(!isBlocked)}
-          className="block-container"
-        >
-          <img src="img/block.png" alt="block" className='block' />
-          <span className="block-text">{isBlocked ? 'Unblock' : 'Block'}</span>
         </button>
         
         <button 

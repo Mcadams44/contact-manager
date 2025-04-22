@@ -1,12 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import AddContact from './AddContact'
+import Searchbar from './Searchbar'
+import { MdModeEdit } from "react-icons/md";
+import { MdDeleteForever } from "react-icons/md";
+import { GoBlocked } from "react-icons/go";
+import { TbLockOpen } from "react-icons/tb";
+import { MdBlock } from "react-icons/md";
+import { MdFavorite } from "react-icons/md";
 
 function ContactsListPage() {
     const [contacts, setContacts] = useState([])
     const [isloading, setisLoading] = useState(true)
-    const [isDeleting, setIsDeleting] = useState(false)
     const [deleteStatus, setDeleteStatus] = useState(null)
+    const [isBlocked, setIsBlocked] = useState(false)
+    // const [filteredContacts, setFilteredContacts] = useState([])
+
+    // const handlesearch =(searchTerm)=>{
+    //     const newFilteredContact = contacts.filter(contact => contact.toLowercase().includes(searchTerm.toLowercase()))
+    // }
 
     useEffect(() => {
         const timeoutId = ()=>{
@@ -27,7 +39,7 @@ function ContactsListPage() {
             setContacts(data)
             setTimeout(() => {
                 setisLoading(false)
-            }, 3000)
+            }, 2000)
         })
         .catch(err => {
             console.log(err)
@@ -37,7 +49,6 @@ function ContactsListPage() {
 
 
     const handleDelete = (contactId) => {
-        setIsDeleting(true)
         fetch(`http://localhost:3000/contacts/${contactId}`, {
             method: 'DELETE'
         })
@@ -48,12 +59,12 @@ function ContactsListPage() {
                 console.error('Failed to delete contact')
                 setDeleteStatus('error')
             }
-            setIsDeleting(false)
+            
         })
         .catch(err => {
             console.error('Error deleting contact:', err)
             setDeleteStatus('error');
-            setIsDeleting(false)
+            
         })
     }
 
@@ -63,6 +74,7 @@ function ContactsListPage() {
         <>
         <div className="contact-list-container">
             <h1 className="contact-list-title">Contact List</h1>
+            <Searchbar />
             
             <div className="contact-list-actions">
                 <Link to="/add" element={AddContact} className="add-contact-btn">
@@ -73,26 +85,34 @@ function ContactsListPage() {
             <div className="contact-list">
                 {contacts.map(contact => (
                     <div key={contact.id} className="contact-card">
+                        <Link className='no-underline' to='/contact/:id' >
                         <div className="contact-info">
                             <h3>
                                 {contact.name} 
-                                {contact.isFavorite && <span className="favorite-icon">⭐</span>}
+                                {contact.isFavorite && <MdFavorite className='favorite-icon'/>}
+                                {contact.isBlocked ? <TbLockOpen className='notBlocked'/> : <MdBlock className='blocked'/>}
                             </h3>
                             <p>Phone: {contact.phone}</p>
                             <p>Email: {contact.email}</p>
                         </div>
+                        </Link>
                         <div className="contact-actions">
-                            <Link to={`/contacts/${contact.id}`} className="view-btn">
-                                View
-                            </Link>
                             <Link to={`/edit/${contact.id}`} className="edit-btn">
-                                Edit
+                        
+                                <MdModeEdit />
                             </Link>
                             <button 
                                 className='delete-btn' 
                                 onClick={() => handleDelete(contact.id)}
                             >
-                                {isDeleting ? 'Deleting...' : 'Delete'}
+                                <MdDeleteForever />
+                            </button>
+                            <button 
+                              type="button" 
+                              onClick={() => setIsBlocked(!isBlocked)}
+                              className='block-btn'
+                            >
+                                <GoBlocked />
                             </button>
                         </div>
                     </div>

@@ -22,7 +22,7 @@
       "email": "robert.johnson@gmail.com",
       "phone": "+254722635813",
       "isFavorite": true,
-      "isBlocked": true
+      "isBlocked": false
     },
     {
       "id": "4",
