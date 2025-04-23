@@ -13,7 +13,8 @@ function ContactDetails() {
 
   const fetchContact = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/contacts/${id}`);
+      // Corrected port to match ContactsListPage
+      const response = await axios.get(`http://localhost:3000/contacts/${id}`);
       setContact(response.data);
     } catch (error) {
       console.error('Error fetching contact:', error);
@@ -22,7 +23,8 @@ function ContactDetails() {
 
   const handleToggleFavorite = async () => {
     const updated = { ...contact, isFavorite: !contact.isFavorite };
-    await axios.patch(`http://localhost:3001/contacts/${id}`, {
+    // Corrected port to match ContactsListPage
+    await axios.patch(`http://localhost:3000/contacts/${id}`, {
       isFavorite: !contact.isFavorite,
     });
     setContact(updated);
@@ -30,7 +32,8 @@ function ContactDetails() {
 
   const handleToggleBlock = async () => {
     const updated = { ...contact, isBlocked: !contact.isBlocked };
-    await axios.patch(`http://localhost:3001/contacts/${id}`, {
+    // Corrected port to match ContactsListPage
+    await axios.patch(`http://localhost:3000/contacts/${id}`, {
       isBlocked: !contact.isBlocked,
     });
     setContact(updated);

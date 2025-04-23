@@ -183,7 +183,8 @@ function ContactsListPage() {
                 {displayedContacts.length > 0 ? (
                     displayedContacts.map(contact => (
                         <div key={contact.id} className="contact-card">
-                            <Link className='no-underline' to={`/contact/${contact.id}`}>
+                            {/* Corrected Link path to match route in App.jsx */}
+                            <Link className='no-underline' to={`/contacts/${contact.id}`}>
                                 <div className="contact-info">
                                     <h3>
                                         {contact.name} 
