@@ -20,6 +20,7 @@ function ContactsListPage() {
     const [isloading, setisLoading] = useState(true)
     const [deleteStatus, setDeleteStatus] = useState(null)
     const [filteredContacts, setFilteredContacts] = useState([])
+    const [searchedContacts, setSearchedContacts] = useState(contacts)
     const [activeFilter, setActiveFilter] = useState("")
     const [modalIsOpen, setIsOpen] = React.useState(false);
     
@@ -73,6 +74,10 @@ function ContactsListPage() {
             setisLoading(false)
         })
     },[])
+
+    useEffect(() => {
+      setSearchedContacts(contacts);
+    }, [contacts])
 
     const filterUser = (filterType) => {
         console.log("Filtering by:", filterType);
@@ -144,9 +149,14 @@ function ContactsListPage() {
         });
     };
 
+    const onSearch = (value) => {
+        if (value === "") setSearchedContacts(contacts);
+        setSearchedContacts(prev => prev.filter(contact => contact.name.toLowerCase().includes(value.toLowerCase())));
+    }
+
     if (isloading) return <h1 className="isloading">Loading...</h1>
 
-    const displayedContacts = activeFilter !== "" ? filteredContacts : contacts;
+    const displayedContacts = activeFilter !== "" ? filteredContacts : searchedContacts;
     
     return (
         <>
@@ -154,7 +164,7 @@ function ContactsListPage() {
             <h1 className="contact-list-title">Contact List</h1>
             
             <div className="search-filter-container">
-                <Searchbar />
+                <Searchbar onSearch={onSearch} />
                 <ContactFilter filterUser={filterUser} activeFilter={activeFilter}/>
                 {activeFilter && (
                     <button 
@@ -180,7 +190,7 @@ function ContactsListPage() {
             )}
             
             <div className="contact-list">
-                {displayedContacts.length > 0 ? (
+                {displayedContacts?.length > 0 ? (
                     displayedContacts.map(contact => (
                         <div key={contact.id} className="contact-card">
                             <Link className='no-underline' to={`/contact/${contact.id}`}>
