@@ -10,17 +10,10 @@ import { TbLockOpen } from "react-icons/tb";
 import { MdBlock } from "react-icons/md";
 import { FaStar } from "react-icons/fa";
 import ReactModal from 'react-modal'
+// import { BsApp } from 'react-icons/bs'
 
-// const customStyles = {
-//     content: {
-//         top: '50%',
-//         left: '50%',
-//       right: 'auto',
-//       bottom: 'auto',
-//       marginRight: '-50%',
-//       transform: 'translate(-50%, -50%)',
-//     },
-// };
+// Set app element for accessibility
+ReactModal.setAppElement('#root');
 
 function ContactsListPage() {
     const [contacts, setContacts] = useState([])
@@ -29,21 +22,28 @@ function ContactsListPage() {
     const [filteredContacts, setFilteredContacts] = useState([])
     const [activeFilter, setActiveFilter] = useState("")
     const [modalIsOpen, setIsOpen] = React.useState(false);
-    // let subtitle;
     
     function openModal() {
-    setIsOpen(true);
-  }
+        setIsOpen(true);
+    }
 
-  // references are now sync'd and can be accessed.
-//   function afterOpenModal() {
-//     subtitle.style.color = '#f00';
-//   }
+    function closeModal() {
+        setIsOpen(false);
+    }
 
-  function closeModal() {
-    setIsOpen(false);
-  }
-
+    // Function to handle adding a new contact
+    const handleAddContact = (newContact) => {
+        // Update the contacts state with the new contact
+        setContacts(prevContacts => [...prevContacts, newContact]);
+        // Also update filtered contacts if needed based on active filter
+        if (activeFilter === "") {
+            setFilteredContacts(prevFiltered => [...prevFiltered, newContact]);
+        } else if (activeFilter === "favorite" && newContact.isFavorite) {
+            setFilteredContacts(prevFiltered => [...prevFiltered, newContact]);
+        } else if (activeFilter === "blocked" && newContact.isBlocked) {
+            setFilteredContacts(prevFiltered => [...prevFiltered, newContact]);
+        }
+    };
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
@@ -83,7 +83,6 @@ function ContactsListPage() {
             setFilteredContacts([...contacts]);
             console.log("Showing all contacts:", contacts.length);
         } else if (filterType === "favorite") {
-
             const favorites = contacts.filter(contact => 
                 contact.isFavorite === true || contact.isFavorite === "true"
             );
@@ -97,6 +96,7 @@ function ContactsListPage() {
             setFilteredContacts(blocked);
         }
     }
+
     const handleDelete = (contactId) => {
         fetch(`http://localhost:3000/contacts/${contactId}`, {
             method: 'DELETE'
@@ -121,34 +121,33 @@ function ContactsListPage() {
         })
     }
    
-    const handleToggleBlocked = (contact) => {
-        fetch(`http://localhost:3000/contacts/${contact.id}`, {
+    const handleToggleBlocked = (contactId, currentBlockedStatus) => {
+        fetch(`http://localhost:3000/contacts/${contactId}`, {
             method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                isBlocked: true/false
-            })
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({ isBlocked: !currentBlockedStatus })
         })
         .then(response => response.json())
-        // .then(updatedContact => {
-        //     // Update contact in state
-        //     const updatedContacts = contacts.map(contact => 
-        //         contact.id === contact.id ? updatedContact : contact
-        //     );
-        //     setContacts(updatedContacts);
-            
-        //     filterUser(activeFilter);
-        // })
-        .catch(err => console.error('Error updating contact:', err));
+        .then(updatedContact => {
+            const updatedContacts = contacts.map(contact => 
+                contact.id === contactId ? updatedContact : contact
+            );
+            setContacts(updatedContacts);
+            setFilteredContacts(prevFiltered => 
+                prevFiltered.map(contact => 
+                    contact.id === contactId ? updatedContact : contact
+                )
+            );
+        })
+        .catch(err => {
+            console.error('Error updating contact:', err);
+        });
     };
-
 
     if (isloading) return <h1 className="isloading">Loading...</h1>
 
     const displayedContacts = activeFilter !== "" ? filteredContacts : contacts;
-
+    
     return (
         <>
         <div className="contact-list-container">
@@ -174,7 +173,6 @@ function ContactsListPage() {
                 
             </div>
             
-            {/* Display status if filtering is active */}
             {activeFilter && (
                 <div className="filter-status">
                     Showing {activeFilter} contacts ({filteredContacts.length})
@@ -208,7 +206,7 @@ function ContactsListPage() {
                                 </button>
                                 <button 
                                     type="button" 
-                                    onClick={handleToggleBlocked}
+                                    onClick={() => handleToggleBlocked(contact.id, contact.isBlocked)}
                                     className='block-btn'
                                     title={contact.isBlocked ? "Unblock Contact" : "Block Contact"}
                                 >
@@ -236,14 +234,15 @@ function ContactsListPage() {
             </div>
         </div>
         )}
-
+        
         <ReactModal
                 isOpen={modalIsOpen}
-                // onAfterOpen={afterOpenModal}
                 onRequestClose={closeModal}
-                // style={customStyles}
         >
-            <AddContact closeModal={closeModal}/>
+            <AddContact 
+                closeModal={closeModal}
+                onAddContact={handleAddContact}
+            />
         </ReactModal>
         </>
     )
