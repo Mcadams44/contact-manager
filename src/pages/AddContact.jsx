@@ -2,28 +2,24 @@
 import React, { useState, useEffect } from 'react'
 import ReactModal from 'react-modal'
 
-function AddContact({closeModal}) {
+function AddContact({ closeModal, onAddContact }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [isFavorite, setIsFavorite] = useState(false);
-  const [isBlocked, setIsBlocked] = useState(false)
+  const [isBlocked, setIsBlocked] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [addStatus, setAddStatus] = useState(null);
-  // const [isOpen, setIsOpen] = React.useState(false)
 
   useEffect(() => {
+    let timeoutId;
     if (addStatus) {
-      setTimeout(() => {
+      timeoutId = setTimeout(() => {
         setAddStatus(null);
       }, 3000);
     }
-    return () => clearTimeout(3000);
+    return () => clearTimeout(timeoutId);
   }, [addStatus]);
-
-  // function closeModal() {
-  //  setIsOpen(false);
-  // }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -49,9 +45,14 @@ function AddContact({closeModal}) {
       setEmail('');
       setPhone('');
       setIsFavorite(false);
+      setIsBlocked(false);
       setIsAdding(false);
       setAddStatus('success');
-      closeModal()
+      
+      // Call the callback function to update the parent component's state
+      onAddContact(data);
+      
+      closeModal();
     })
     .catch(err => {
       console.log(err);
@@ -96,6 +97,14 @@ function AddContact({closeModal}) {
           className={isFavorite ? 'favorite-active' : 'favorite-notActive'}
         >
           {isFavorite ? 'Remove as favorite ★' : 'Set as Favorite ☆'}
+        </button>
+        
+        <button 
+          type="button" 
+          onClick={() => setIsBlocked(!isBlocked)}
+          className={isBlocked ? 'blocked-active' : 'blocked-notActive'}
+        >
+          {isBlocked ? 'Unblock Contact' : 'Block Contact'}
         </button>
         
         <button 

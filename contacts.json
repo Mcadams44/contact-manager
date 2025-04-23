@@ -41,84 +41,52 @@
       "isBlocked": true
     },
     {
-      "id": "a202",
-      "name": "oscar",
-      "email": "sdfghj@gmail.com",
-      "phone": "2346789876",
-      "isFavorite": false,
-      "isBlocked": false
-    },
-    {
-      "id": "9746",
-      "name": "sdsd",
-      "email": "123456sdfgh@gmail.com",
-      "phone": "2345678",
-      "isFavorite": false,
-      "isBlocked": false
-    },
-    {
-      "id": "36e6",
-      "name": "fgds",
-      "email": "3jfk@gmail.com",
-      "phone": "7896543456",
-      "isFavorite": false,
-      "isBlocked": false
-    },
-    {
-      "id": "f744",
-      "name": "cghds",
-      "email": "jjf@gmail.com",
-      "phone": "3485678767",
-      "isFavorite": false,
-      "isBlocked": false
-    },
-    {
-      "id": "4fbf",
-      "name": "hjfgwjh",
-      "email": "test@example.com",
-      "phone": "123456789",
-      "isFavorite": false,
-      "isBlocked": false
-    },
-    {
-      "id": "5883",
-      "name": "dfghj",
-      "email": "fghj@gm.com",
-      "phone": "3456789976",
-      "isFavorite": false,
-      "isBlocked": false
-    },
-    {
-      "id": "6c98",
-      "name": "ds",
-      "email": "dfg@gm.com",
-      "phone": "2345678907",
+      "id": "7963",
+      "name": "koliati",
+      "email": "budai@gmail.com",
+      "phone": "2345678987",
       "isFavorite": true,
       "isBlocked": false
     },
     {
-      "id": "e901",
-      "name": "fd",
-      "email": "jhhdfdffd@nm.com",
-      "phone": "4676967767",
-      "isFavorite": true,
+      "id": "f91d",
+      "name": "www",
+      "email": "kahen@lk.co",
+      "phone": "44567890",
+      "isFavorite": false,
       "isBlocked": false
     },
     {
-      "id": "8383",
-      "name": "hhs",
-      "email": "ghdh@gmail.com",
-      "phone": "76576876",
+      "id": "2e1e",
+      "name": "black rock",
+      "email": "d@h.com",
+      "phone": "3456789087",
       "isFavorite": false,
-      "isBlocked": true
+      "isBlocked": false
     },
     {
-      "id": "f460",
-      "name": "gdgh",
-      "email": "q@g.com",
-      "phone": "5576857578",
+      "id": "5f65",
+      "name": "popo",
+      "email": "pp@j.com",
+      "phone": "4567890098",
       "isFavorite": false,
-      "isBlocked": true
+      "isBlocked": false
+    },
+    {
+      "id": "a2d0",
+      "name": "blackjack",
+      "email": "bj@g.com",
+      "phone": "2768909865",
+      "isFavorite": false,
+      "isBlocked": false
+    },
+    {
+      "id": "7797",
+      "name": "bbl drizzy",
+      "email": "fghjk@g.com",
+      "phone": "3456789098",
+      "isFavorite": false,
+      "isBlocked": false
     }
   ]
 }
