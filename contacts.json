@@ -38,7 +38,7 @@
       "email": "michael.wilson@gmail.com",
       "phone": "+254701222671",
       "isFavorite": false,
-      "isBlocked": true
+      "isBlocked": false
     },
     {
       "id": "7963",
