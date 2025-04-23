@@ -100,14 +100,6 @@ function AddContact({ closeModal, onAddContact }) {
         </button>
         
         <button 
-          type="button" 
-          onClick={() => setIsBlocked(!isBlocked)}
-          className={isBlocked ? 'blocked-active' : 'blocked-notActive'}
-        >
-          {isBlocked ? 'Unblock Contact' : 'Block Contact'}
-        </button>
-        
-        <button 
           type="submit" 
           className='submit-contact' 
           disabled={isAdding}
