@@ -10,6 +10,7 @@ import { TbLockOpen } from "react-icons/tb";
 import { MdBlock } from "react-icons/md";
 import { FaStar } from "react-icons/fa";
 import ReactModal from 'react-modal'
+import ContactDetails from './ContactDetails'
 // import { BsApp } from 'react-icons/bs'
 
 // Set app element for accessibility
