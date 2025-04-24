@@ -1,12 +1,12 @@
 {
   "contacts": [
     {
-      "id": "1",
-      "name": "John Doe",
+      "name": "John big",
       "email": "john.doe@gmail.com",
-      "phone": "+254123456789",
-      "isFavorite": true,
-      "isBlocked": false
+      "phone": "+254123456787",
+      "isFavorite": false,
+      "isBlocked": false,
+      "id": "1"
     },
     {
       "id": "2",
@@ -38,7 +38,7 @@
       "email": "michael.wilson@gmail.com",
       "phone": "+254701222671",
       "isFavorite": false,
-      "isBlocked": true
+      "isBlocked": false
     },
     {
       "id": "a202",
@@ -118,7 +118,7 @@
       "email": "q@g.com",
       "phone": "5576857578",
       "isFavorite": false,
-      "isBlocked": true
+      "isBlocked": false
     },
     {
       "id": "4c4f",

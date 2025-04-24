@@ -1,43 +1,40 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import AddContact from './AddContact'
-import Searchbar from './Searchbar'
-import ContactFilter from './ContactFilter'
-import { MdModeEdit } from "react-icons/md";
-import { MdDeleteForever } from "react-icons/md";
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import AddContact from './AddContact';
+import Searchbar from './Searchbar';
+import ContactFilter from './ContactFilter';
+import { MdModeEdit, MdDeleteForever, MdBlock } from "react-icons/md";
 import { GoBlocked } from "react-icons/go";
 import { TbLockOpen } from "react-icons/tb";
-import { MdBlock } from "react-icons/md";
 import { FaStar } from "react-icons/fa";
-import ReactModal from 'react-modal'
-import ContactDetails from './ContactDetails'
-// import { BsApp } from 'react-icons/bs'
+import ReactModal from 'react-modal';
 
-// Set app element for accessibility
 ReactModal.setAppElement('#root');
 
 function ContactsListPage() {
-    const [contacts, setContacts] = useState([])
-    const [isloading, setisLoading] = useState(true)
-    const [deleteStatus, setDeleteStatus] = useState(null)
-    const [filteredContacts, setFilteredContacts] = useState([])
-    const [searchedContacts, setSearchedContacts] = useState(contacts)
-    const [activeFilter, setActiveFilter] = useState("")
-    const [modalIsOpen, setIsOpen] = React.useState(false);
-    
+    const [contacts, setContacts] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [deleteStatus, setDeleteStatus] = useState(null);
+    const [filteredContacts, setFilteredContacts] = useState([]);
+    const [searchedContacts, setSearchedContacts] = useState([]);
+    const [activeFilter, setActiveFilter] = useState("");
+    const [modalIsOpen, setIsOpen] = useState(false);
+
+    const [isEditMode, setIsEditMode] = useState(false);
+    const [currentContact, setCurrentContact] = useState(null);
+
     function openModal() {
         setIsOpen(true);
     }
 
     function closeModal() {
         setIsOpen(false);
+        setIsEditMode(false);
+        setCurrentContact(null);
     }
 
-    // Function to handle adding a new contact
     const handleAddContact = (newContact) => {
-        // Update the contacts state with the new contact
         setContacts(prevContacts => [...prevContacts, newContact]);
-        // Also update filtered contacts if needed based on active filter
         if (activeFilter === "") {
             setFilteredContacts(prevFiltered => [...prevFiltered, newContact]);
         } else if (activeFilter === "favorite" && newContact.isFavorite) {
@@ -47,61 +44,67 @@ function ContactsListPage() {
         }
     };
 
+    const handleEditClick = (contact) => {
+        setCurrentContact(contact);
+        setIsEditMode(true);
+        openModal();
+    };
+
+    const handleSaveContact = (updatedContact) => {
+        fetch(`http://localhost:3000/contacts/${updatedContact.id}`, {
+            method: 'PUT',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updatedContact)
+        })
+        .then(res => res.json())
+        .then(data => {
+            const updatedList = contacts.map(contact => 
+                contact.id === data.id ? data : contact
+            );
+            setContacts(updatedList);
+            setFilteredContacts(updatedList);
+            closeModal();
+        })
+        .catch(err => console.error("Failed to update contact:", err));
+    };
+
     useEffect(() => {
         const timeoutId = setTimeout(() => {
-            if (deleteStatus) {
-                setDeleteStatus(null)
-            }
+            if (deleteStatus) setDeleteStatus(null);
         }, 3000);
-        
-        return () => {
-            clearTimeout(timeoutId)
-        }
+        return () => clearTimeout(timeoutId);
     }, [deleteStatus]);
 
     useEffect(() => {
         fetch('http://localhost:3000/contacts')
-        .then(response => response.json())
+        .then(res => res.json())
         .then(data => {
-            console.log("Loaded contacts:", data); 
-            setContacts(data)
-            setFilteredContacts(data) 
-            setTimeout(() => {
-                setisLoading(false)
-            }, 2000)
+            setContacts(data);
+            setFilteredContacts(data);
+            setTimeout(() => setIsLoading(false), 2000);
         })
         .catch(err => {
-            console.log(err)
-            setisLoading(false)
-        })
-    },[])
+            console.error(err);
+            setIsLoading(false);
+        });
+    }, []);
 
     useEffect(() => {
-      setSearchedContacts(contacts);
-    }, [contacts])
+        setSearchedContacts(contacts);
+    }, [contacts]);
 
     const filterUser = (filterType) => {
-        console.log("Filtering by:", filterType);
-        
         setActiveFilter(filterType);
-        
         if (filterType === "") {
             setFilteredContacts([...contacts]);
-            console.log("Showing all contacts:", contacts.length);
         } else if (filterType === "favorite") {
-            const favorites = contacts.filter(contact => 
-                contact.isFavorite === true || contact.isFavorite === "true"
-            );
-            console.log("Filtered favorites:", favorites.length);
+            const favorites = contacts.filter(contact => contact.isFavorite === true || contact.isFavorite === "true");
             setFilteredContacts(favorites);
         } else if (filterType === "blocked") {
-            const blocked = contacts.filter(contact => 
-                contact.isBlocked === true || contact.isBlocked === "true"
-            );
-            console.log("Filtered blocked:", blocked.length);
+            const blocked = contacts.filter(contact => contact.isBlocked === true || contact.isBlocked === "true");
             setFilteredContacts(blocked);
         }
-    }
+    };
 
     const handleDelete = (contactId) => {
         fetch(`http://localhost:3000/contacts/${contactId}`, {
@@ -109,115 +112,91 @@ function ContactsListPage() {
         })
         .then(response => {
             if (response.ok) {
-                const updatedContacts = contacts.filter(contact => contact.id !== contactId)
-                setContacts(updatedContacts)
-                setFilteredContacts(prevFiltered => 
-                    prevFiltered.filter(contact => contact.id !== contactId)
-                )
-                setDeleteStatus('success')
+                const updated = contacts.filter(c => c.id !== contactId);
+                setContacts(updated);
+                setFilteredContacts(updated);
+                setDeleteStatus('success');
             } else {
-                console.error('Failed to delete contact')
-                setDeleteStatus('error')
+                setDeleteStatus('error');
             }
-            
         })
-        .catch(err => {
-            console.error('Error deleting contact:', err)
-            setDeleteStatus('error')
-        })
-    }
-   
+        .catch(() => setDeleteStatus('error'));
+    };
+
     const handleToggleBlocked = (contactId, currentBlockedStatus) => {
         fetch(`http://localhost:3000/contacts/${contactId}`, {
             method: 'PATCH',
-            headers: {"Content-Type": "application/json"},
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ isBlocked: !currentBlockedStatus })
         })
-        .then(response => response.json())
+        .then(res => res.json())
         .then(updatedContact => {
-            const updatedContacts = contacts.map(contact => 
-                contact.id === contactId ? updatedContact : contact
-            );
-            setContacts(updatedContacts);
-            setFilteredContacts(prevFiltered => 
-                prevFiltered.map(contact => 
-                    contact.id === contactId ? updatedContact : contact
-                )
-            );
-        })
-        .catch(err => {
-            console.error('Error updating contact:', err);
+            const updated = contacts.map(c => c.id === contactId ? updatedContact : c);
+            setContacts(updated);
+            setFilteredContacts(updated);
         });
     };
 
     const onSearch = (value) => {
-        if (value === "") setSearchedContacts(contacts);
-        setSearchedContacts(prev => prev.filter(contact => contact.name.toLowerCase().includes(value.toLowerCase())));
-    }
+        if (value === "") return setSearchedContacts(contacts);
+        setSearchedContacts(contacts.filter(c => c.name.toLowerCase().includes(value.toLowerCase())));
+    };
 
-    if (isloading) return <h1 className="isloading">Loading...</h1>
+    if (isLoading) return <h1 className="isloading">Loading...</h1>;
 
     const displayedContacts = activeFilter !== "" ? filteredContacts : searchedContacts;
-    
+
     return (
         <>
         <div className="contact-list-container">
             <h1 className="contact-list-title">Contact List</h1>
-            
+
             <div className="search-filter-container">
                 <Searchbar onSearch={onSearch} />
-                <ContactFilter filterUser={filterUser} activeFilter={activeFilter}/>
+                <ContactFilter filterUser={filterUser} activeFilter={activeFilter} />
                 {activeFilter && (
-                    <button 
-                        onClick={() => filterUser("")} 
-                        className="clear-filter-btn"
-                    >
+                    <button onClick={() => filterUser("")} className="clear-filter-btn">
                         Clear Filter
                     </button>
                 )}
             </div>
-            
+
             <div className="contact-list-actions">
                 <button className="add-contact-btn" onClick={openModal}>
                     Add New Contact
                 </button>
-                
             </div>
-            
+
             {activeFilter && (
                 <div className="filter-status">
                     Showing {activeFilter} contacts ({filteredContacts.length})
                 </div>
             )}
-            
+
             <div className="contact-list">
                 {displayedContacts?.length > 0 ? (
                     displayedContacts.map(contact => (
                         <div key={contact.id} className="contact-card">
-                            {/* Corrected Link path to match route in App.jsx */}
                             <Link className='no-underline' to={`/contacts/${contact.id}`}>
                                 <div className="contact-info">
                                     <h3>
-                                        {contact.name} 
-                                        {contact.isFavorite && <FaStar className="favorite-icon"/>}
-                                        {contact.isBlocked && <MdBlock className='blocked'/>}
+                                        {contact.name}
+                                        {contact.isFavorite && <FaStar className="favorite-icon" />}
+                                        {contact.isBlocked && <MdBlock className='blocked' />}
                                     </h3>
                                     <p>Phone: {contact.phone}</p>
                                     <p>Email: {contact.email}</p>
                                 </div>
                             </Link>
                             <div className="contact-actions">
-                                <Link to={`/edit/${contact.id}`} className="edit-btn">
+                                <button className="edit-btn" onClick={() => handleEditClick(contact)}>
                                     <MdModeEdit />
-                                </Link>
-                                <button 
-                                    className='delete-btn' 
-                                    onClick={() => handleDelete(contact.id)}
-                                >
+                                </button>
+                                <button className='delete-btn' onClick={() => handleDelete(contact.id)}>
                                     <MdDeleteForever />
                                 </button>
-                                <button 
-                                    type="button" 
+                                <button
+                                    type="button"
                                     onClick={() => handleToggleBlocked(contact.id, contact.isBlocked)}
                                     className='block-btn'
                                     title={contact.isBlocked ? "Unblock Contact" : "Block Contact"}
@@ -236,28 +215,29 @@ function ContactsListPage() {
         </div>
 
         {deleteStatus && (
-        <div className="notification-container">
-            <div className={deleteStatus === 'success' ? 'contact-deleted' : 'contact-notDeleted'}>
-                <span>
-                    {deleteStatus === 'success' 
-                        ? 'Contact deleted successfully' 
-                        : 'Failed to delete contact. Try again later.'}
-                </span>
+            <div className="notification-container">
+                <div className={deleteStatus === 'success' ? 'contact-deleted' : 'contact-notDeleted'}>
+                    <span>
+                        {deleteStatus === 'success'
+                            ? 'Contact deleted successfully'
+                            : 'Failed to delete contact. Try again later.'}
+                    </span>
+                </div>
             </div>
-        </div>
         )}
-        
+
         <ReactModal
-                isOpen={modalIsOpen}
-                onRequestClose={closeModal}
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
         >
-            <AddContact 
+            <AddContact
                 closeModal={closeModal}
-                onAddContact={handleAddContact}
+                onAddContact={isEditMode ? handleSaveContact : handleAddContact}
+                existingContact={isEditMode ? currentContact : null}
             />
         </ReactModal>
         </>
-    )
+    );
 }
 
-export default ContactsListPage
+export default ContactsListPage;
