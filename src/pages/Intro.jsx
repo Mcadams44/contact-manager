@@ -30,7 +30,7 @@ function Intro() {
             
             <div className="feature">
               <div >
-              <img className="favorite-display" src='img/favorite.png'/>
+              <img className="favorite-display" src='/favorite.png'/>
               </div>
               <h3>Favorite</h3>
               <p>Mark important contacts as favorites for quick access</p>

@@ -16,7 +16,7 @@ function Navbar() {
           <button className='add'>+</button>
         </Link>
         <Link to="/contacts">
-          <img className='details' src="img/info.png" alt="Contact Details" />
+          <img className='details' src="public/circle.png" alt="Contact Details" />
         </Link>
       </div>
     </div>
