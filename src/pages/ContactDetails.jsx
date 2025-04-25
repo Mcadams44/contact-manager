@@ -33,7 +33,7 @@ function ContactDetails() {
 
   const fetchContact = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/contacts/${id}`);
+      const response = await axios.get(`https://contact-manager-server-lyart.vercel.app/contacts/${id}`);
       setContact(response.data);
     } catch (error) {
       console.error('Error fetching contact:', error);
@@ -42,7 +42,7 @@ function ContactDetails() {
 
   const handleToggleFavorite = async () => {
     const updated = { ...contact, isFavorite: !contact.isFavorite };
-    await axios.patch(`http://localhost:3000/contacts/${id}`, {
+    await axios.patch(`https://contact-manager-server-lyart.vercel.app/contacts/${id}`, {
       isFavorite: !contact.isFavorite,
     });
     setContact(updated);
@@ -50,7 +50,7 @@ function ContactDetails() {
 
   const handleToggleBlock = async () => {
     const updated = { ...contact, isBlocked: !contact.isBlocked };
-    await axios.patch(`http://localhost:3000/contacts/${id}`, {
+    await axios.patch(`https://contact-manager-server-lyart.vercel.app/contacts/${id}`, {
       isBlocked: !contact.isBlocked,
     });
     setContact(updated);
@@ -88,7 +88,7 @@ function ContactDetails() {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://localhost:3000/contacts/${id}`, editFormData);
+      const response = await axios.put(`https://contact-manager-server-lyart.vercel.app/contacts/${id}`, editFormData);
       setContact(response.data);
       setIsEditing(false);
     } catch (error) {

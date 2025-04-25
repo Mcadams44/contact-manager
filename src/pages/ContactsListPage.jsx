@@ -112,7 +112,7 @@ function ContactsListPage() {
     }, [deleteStatus]);
 
     useEffect(() => {
-        fetch('http://localhost:3000/contacts')
+        fetch('https://contact-manager-server-lyart.vercel.app/contacts')
         .then(res => res.json())
         .then(data => {
             setContacts(data);
@@ -143,7 +143,7 @@ function ContactsListPage() {
     };
 
     const handleDelete = (contactId) => {
-        fetch(`http://localhost:3000/contacts/${contactId}`, {
+        fetch(`https://contact-manager-server-lyart.vercel.app/contacts/${contactId}`, {
             method: 'DELETE'
         })
         .then(response => {
@@ -164,7 +164,7 @@ function ContactsListPage() {
     };
 
     const handleToggleBlocked = (contactId, currentBlockedStatus) => {
-        fetch(`http://localhost:3000/contacts/${contactId}`, {
+        fetch(`https://contact-manager-server-lyart.vercel.app/contacts/${contactId}`, {
             method: 'PATCH',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ isBlocked: !currentBlockedStatus })
@@ -183,7 +183,7 @@ function ContactsListPage() {
 
     const handleToggleFavorite = async (contactId, currentFavoriteStatus) => {
         try {
-            const response = await axios.patch(`http://localhost:3000/contacts/${contactId}`, {
+            const response = await axios.patch(`https://contact-manager-server-lyart.vercel.app/contacts/${contactId}`, {
                 isFavorite: !currentFavoriteStatus,
             });
             
@@ -216,7 +216,7 @@ function ContactsListPage() {
     const handleEditSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.put(`http://localhost:3000/contacts/${editFormData.id}`, editFormData);
+            const response = await axios.put(`https://contact-manager-server-lyart.vercel.app/contacts/${editFormData.id}`, editFormData);
             const updatedContact = response.data;
             
             const updatedList = contacts.map(contact => 

@@ -31,7 +31,7 @@ function AddContact({ closeModal, onAddContact }) {
       isBlocked
     };
 
-    fetch('http://localhost:3000/contacts', {
+    fetch('https://contact-manager-server-lyart.vercel.app/contacts', {
       method: 'POST',
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(newContact)
