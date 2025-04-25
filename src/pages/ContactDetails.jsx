@@ -57,7 +57,7 @@ function ContactDetails() {
   };
 
   const handleClose = () => {
-    navigate(-1); // Navigates back to the previous page
+    navigate(-1);
   };
 
   const handleEditClick = () => {
@@ -66,7 +66,6 @@ function ContactDetails() {
 
   const handleCancelEdit = () => {
     setIsEditing(false);
-    // Reset form data to current contact values
     if (contact) {
       setEditFormData({
         name: contact.name,
@@ -102,7 +101,6 @@ function ContactDetails() {
   return (
     <div className="modal-overlay">
       {isEditing ? (
-        // Edit Form Modal
         <div className="modal edit-modal">
           <button className="modal-close-btn" onClick={handleCancelEdit}>
             ×
@@ -178,7 +176,6 @@ function ContactDetails() {
           </form>
         </div>
       ) : (
-        // Contact Details Modal
         <div className="modal">
           <button className="modal-close-btn" onClick={handleClose}>
             ×

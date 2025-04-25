@@ -83,7 +83,6 @@ function ContactsListPage() {
         openEditModal(contact);
     };
 
-    // Open details modal when clicking on a contact
     const handleContactClick = (contact) => {
         openDetailsModal(contact);
     };

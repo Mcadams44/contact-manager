@@ -1,6 +1,4 @@
-// AddContact.jsx
 import React, { useState, useEffect } from 'react'
-import ReactModal from 'react-modal'
 
 function AddContact({ closeModal, onAddContact }) {
   const [name, setName] = useState('');
@@ -48,10 +46,7 @@ function AddContact({ closeModal, onAddContact }) {
       setIsBlocked(false);
       setIsAdding(false);
       setAddStatus('success');
-      
-      // Call the callback function to update the parent component's state
       onAddContact(data);
-      
       closeModal();
     })
     .catch(err => {
