@@ -10,9 +10,7 @@ import Intro from "../pages/Intro";
 import ContactDetails from "../pages/ContactDetails";
 import ContactsListPage from "../pages/ContactsListPage";
 import AddContact from "../pages/AddContact";
-import EditPage from "../pages/EditPage";
-import FavoriteContacts from "../pages/FavoriteContacts";
-import React, { useState } from "react";
+import React from "react";
 
 function App() {
   return (
@@ -23,8 +21,6 @@ function App() {
         <Route path="/contacts" element={<ContactsListPage />} />
         <Route path="/contacts/:id" element={<ContactDetails />} />
         <Route path="/add" element={<AddContact />} />
-        <Route path="/edit/:id" element={<EditPage />} />
-        <Route path="/favorites" element={<FavoriteContacts />} />
       </Routes>
     </Router>
   );
