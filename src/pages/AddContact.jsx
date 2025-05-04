@@ -9,6 +9,7 @@ function AddContact({ closeModal, onAddContact }) {
   const [isAdding, setIsAdding] = useState(false);
   const [addStatus, setAddStatus] = useState(null);
 
+  sfghfh
   useEffect(() => {
     let timeoutId;
     if (addStatus) {
